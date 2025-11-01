@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "google-sheets-manager": "^1.0.4",
-    "googleapis": "^164.1.0",
-    "node-fetch": "^3.3.2"
-  }
-}
