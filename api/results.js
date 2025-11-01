@@ -1,7 +1,8 @@
 // Fajl: api/results.js
 
-// --- 1. Uvoz novog paketa (CommonJS) ---
-const GoogleSheetsManager = require('google-sheets-manager'); 
+// --- 1. Uvoz novog paketa (Rešavanje problema sa 'constructor') ---
+const GSM = require('google-sheets-manager'); 
+const GoogleSheetsManager = GSM.default || GSM; 
 
 // --- 2. Funkcija za konekciju i dohvat ---
 async function connectAndGetSheet() {
@@ -28,7 +29,7 @@ export default async function handler(request, response) {
         // Mapiranje (pristupamo svojstvima kao običnim objektima)
         const results = rawResults
             .map(r => ({
-                // Ključevi se podudaraju sa zaglavljem kolone
+                // Pristup koloni: r['Naziv Kolone']
                 brojPolaska: r['Broj Polaska'], 
                 vozilo: r['Vozilo'],
                 vreme: r['Vreme Polaska'],
@@ -40,12 +41,13 @@ export default async function handler(request, response) {
         // Ručno sortiranje po Broju Polaska
         results.sort((a, b) => parseInt(a.brojPolaska) - parseInt(b.brojPolaska));
         
+        // Postavke keširanja
         response.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate=59');
         response.status(200).json({ results, lastUpdated: new Date().toISOString() });
 
     } catch (error) {
         console.error('API Greška:', error);
-        // Greška autorizacije će ovde proći kao 500, ali će logovi biti jasniji
+        // Greška autorizacije će proći kao 500, ali će logovi biti jasniji
         response.status(500).json({ status: 'Error', message: error.message });
     }
 }
