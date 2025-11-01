@@ -11,7 +11,7 @@
 
 async function connectAndGetSheet() { // ili connectToSheet
     
-    // 1. Dinamički uvezite GoogleSpreadsheet klasu direktno
+    // 1. Uvezite ceo modul i izvadite klasu
     const { GoogleSpreadsheet } = await import('google-spreadsheet'); 
     
     // 2. Kreirajte instancu
