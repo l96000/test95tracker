@@ -45,7 +45,8 @@
 
             try {
                 // POZIVAMO NAŠU API FUNKCIJU
-                const response = await fetch('/api/get-data'); 
+                // MORA da poziva NOVI fajl
+const response = await fetch('/api/results');
                 if (!response.ok) {
                     throw new Error('Server nije odgovorio.');
                 }
@@ -87,4 +88,5 @@
 
     </script>
 </body>
+
 </html>
