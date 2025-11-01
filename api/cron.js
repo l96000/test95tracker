@@ -1,11 +1,11 @@
 // Fajl: api/cron.js
 
-// --- 1. Uvoz novog paketa (Rešavanje problema sa 'constructor') ---
-const GoogleSheetsManager = require('google-sheets-manager').default || require('google-sheets-manager');
+// --- 1. Uvoz novog paketa ---
+const GoogleSheetsManager = require('google-sheets-manager'); 
 
 // --- 2. Konstante (Moraju biti definisane ili uvezene) ---
-const timetableMapA = { "06:20": 1, "06:50": 2, "07:20": 3 };
-const timetableMapB = { "06:35": 1, "07:05": 2, "07:35": 3 };
+const timetableMapA = { "06:20:00": 1, "06:50:00": 2, "07:20:00": 3 };
+const timetableMapB = { "06:35:00": 1, "07:05:00": 2, "07:35:00": 3 };
 
 const URLS = [
     { url: 'https://api.prometko.si/api/realtime/stations/135/arrivals', timetable: timetableMapA },
@@ -46,17 +46,16 @@ export default async function handler(request, response) {
         let currentLiveBuses = {};
         for (const { url, timetable } of URLS) {
             const apiResponse = await fetch(url);
-            // ... (Logika za prikupljanje currentLiveBuses) ...
+            // ... (Logika je ista) ...
         }
         
         // --- B. DOHVATANJE TRENUTNOG STANJA IZ GOOGLE SHEETS ---
         const manager = await connectToSheet();
         const rows = await manager.readSheet('StanjeLinije95'); // Čitanje
         
-        // Mapiranje redova (moramo sačuvati indeks reda za UPDATE)
         let existingState = rows.map((r, index) => ({
-            row: r, // Čuvamo ceo objekat (za vrednosti)
-            rowIndex: index, // Cuva originalni indeks (0-indeksiran)
+            row: r, 
+            rowIndex: index, 
             block: r['Broj Polaska'],
             vehicle: r['Vozilo'],
             isReplaced: !!r['Zamena Vozila'] 
@@ -66,28 +65,17 @@ export default async function handler(request, response) {
         const recordsToUpdate = [];
         
         // --- C. LOGIKA ZA PRAĆENJE PROMENA ---
-        for (const block in currentLiveBuses) {
-            const liveBus = currentLiveBuses[block];
-            const existingRecord = existingState.find(r => r.block == block);
-            
-            if (!existingRecord) {
-                // ... (NOVI POLAZAK logika) ...
-            } else if (existingRecord.vehicle != liveBus.vehicle && !existingRecord.isReplaced) {
-                // ... (ZAMENA VOZILA logika) ...
-            }
-        }
+        // ...
         
         // --- D. AŽURIRANJE GOOGLE SHEETS ---
         
-        // Kreiranje novih redova
         if (newRecords.length > 0) {
             await manager.addRows('StanjeLinije95', newRecords);
         }
         
-        // Ažuriranje postojećih redova
         if (recordsToUpdate.length > 0) {
             const updates = recordsToUpdate.map(update => ({
-                rowNumber: update.rowIndex + 2, // 0-indeksiran red + 2 (za zaglavlje)
+                rowNumber: update.rowIndex + 2, 
                 values: {
                     'Zamena Vozila': `${update.oldVehicle} -> ${update.newVehicle}`,
                     'Status': 'Zamenjen',
