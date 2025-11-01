@@ -12,7 +12,7 @@ async function connectToSheet() {
         private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'), // Važno: konvertujemo \n nazad u prelome linija
     });
     await doc.loadInfo(); // Učitavanje svih Sheet-ova
-    return doc.sheetsByTitle['StanjeLinije95']; // Ime sheet-a
+    return doc.sheetsByTitle['Stanjelinije95']; // Ime sheet-a
 }
 
 // ... unutar export default async function handler(...) ...
