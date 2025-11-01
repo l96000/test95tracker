@@ -1,18 +1,23 @@
 // Fajl: api/results.js (Koristi Google Sheets API)
 
-const { GoogleSpreadsheet } = await import('google-spreadsheet');
+import { GoogleSpreadsheet } from 'google-spreadsheet';
 // ... (Iste Environment Variables kao u cron.js) ...
 
 // const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
-const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
+
 
 async function connectAndGetSheet() {
+    // Kreirajte instancu unutar async funkcije
+    const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
+
+    // Korišćenje Service Account autentifikacije
     await doc.useServiceAccountAuth({
         client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
         private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
     });
+    
     await doc.loadInfo();
-    return doc.sheetsByTitle['Stanjelinije95'];
+    return doc.sheetsByTitle['StanjeLinije95'];
 }
 
 export default async function handler(request, response) {
