@@ -1,7 +1,10 @@
 // Fajl: api/results.js (Koristi Google Sheets API)
 
-import { GoogleSpreadsheet } from 'google-spreadsheet';
-// ... (Iste Environment Variables kao u cron.js) ...
+// Uvozimo GoogleSpreadsheet konstruktor
+import GS from 'google-spreadsheet'; 
+
+// Ponekad je klasa skrivena unutar 'default' svojstva kada se koristi 'import'
+const { GoogleSpreadsheet } = GS.default || GS;
 
 // const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
 
