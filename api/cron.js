@@ -1,6 +1,6 @@
 // Fajl: api/cron.js (Koristi Google Sheets API)
 
-require { GoogleSpreadsheet } from 'google-spreadsheet';
+const { GoogleSpreadsheet } = await import('google-spreadsheet');
 // Nema potrebe za importom googleapis direktno, google-spreadsheet je dovoljan
 
 // --- Konekcija na Sheet ---
