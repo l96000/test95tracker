@@ -2,7 +2,7 @@
   "name": "linija-95-tracker",
   "version": "1.0.0",
   "description": "",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,9 +10,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "commonjs",
   "dependencies": {
-    "google-sheets-manager": "^1.0.4",
-    "googleapis": "^164.1.0",
     "node-fetch": "^3.3.2"
   }
 }
