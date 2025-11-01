@@ -9,6 +9,9 @@
 // --- Konekcija na Sheet ---
 //const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
 
+const { GoogleSpreadsheet } = require('google-spreadsheet');
+const fetch = require('node-fetch');
+
 async function connectAndGetSheet() { // ili connectToSheet
     
     // 1. Uvezite ceo modul i izvadite klasu
