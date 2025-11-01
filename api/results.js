@@ -1,6 +1,6 @@
 // Fajl: api/results.js (Koristi Google Sheets API)
 
-import { GoogleSpreadsheet } from 'google-spreadsheet';
+require { GoogleSpreadsheet } from 'google-spreadsheet';
 // ... (Iste Environment Variables kao u cron.js) ...
 
 const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
