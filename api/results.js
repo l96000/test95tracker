@@ -1,19 +1,22 @@
 // Fajl: api/results.js (Koristi Google Sheets API)
 
 // Uvozimo GoogleSpreadsheet konstruktor
-import GS from 'google-spreadsheet'; 
+//import GS from 'google-spreadsheet'; 
 
 // Ponekad je klasa skrivena unutar 'default' svojstva kada se koristi 'import'
-const { GoogleSpreadsheet } = GS.default || GS;
+//const { GoogleSpreadsheet } = GS.default || GS;
 
 // const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
 
 
 async function connectAndGetSheet() {
-    // Kreirajte instancu unutar async funkcije
+    // 1. DINAMIČKI ASINHRONI UVOZ
+    const { GoogleSpreadsheet } = await import('google-spreadsheet');
+
+    // 2. Kreirajte instancu unutar async funkcije
     const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
 
-    // Korišćenje Service Account autentifikacije
+    // 3. Korišćenje Service Account autentifikacije
     await doc.useServiceAccountAuth({
         client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
         private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
