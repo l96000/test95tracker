@@ -1,8 +1,7 @@
 // Fajl: api/results.js
 
 // --- 1. Uvoz novog paketa (Rešavanje problema sa 'constructor') ---
-const GSM = require('google-sheets-manager'); 
-const GoogleSheetsManager = GSM.default || GSM; 
+const GoogleSheetsManager = require('google-sheets-manager').default || require('google-sheets-manager');
 
 // --- 2. Funkcija za konekciju i dohvat ---
 async function connectAndGetSheet() {
