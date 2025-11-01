@@ -1,18 +1,22 @@
 // Fajl: api/cron.js (Koristi Google Sheets API)
 
-import GoogleSpreadsheet from 'google-spreadsheet';
+import { GoogleSpreadsheet } from 'google-spreadsheet';
 // Nema potrebe za importom googleapis direktno, google-spreadsheet je dovoljan
 
 // --- Konekcija na Sheet ---
-const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
+//const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
 
 async function connectToSheet() {
+    const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
+
+    // Korišćenje Service Account autentifikacije
     await doc.useServiceAccountAuth({
         client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'), // Važno: konvertujemo \n nazad u prelome linija
+        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
     });
-    await doc.loadInfo(); // Učitavanje svih Sheet-ova
-    return doc.sheetsByTitle['Stanjelinije95']; // Ime sheet-a
+    
+    await doc.loadInfo(); 
+    return doc.sheetsByTitle['StanjeLinije95']; 
 }
 
 // ... unutar export default async function handler(...) ...
