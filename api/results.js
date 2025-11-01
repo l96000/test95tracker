@@ -11,7 +11,7 @@ async function connectAndGetSheet() {
         private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
     });
     await doc.loadInfo();
-    return doc.sheetsByTitle['StanjeLinije95'];
+    return doc.sheetsByTitle['Stanjelinije95'];
 }
 
 export default async function handler(request, response) {
