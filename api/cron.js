@@ -1,8 +1,7 @@
 // Fajl: api/cron.js
 
 // --- 1. Uvoz novog paketa (Rešavanje problema sa 'constructor') ---
-const GSM = require('google-sheets-manager'); 
-const GoogleSheetsManager = GSM.default || GSM; 
+const GoogleSheetsManager = require('google-sheets-manager').default || require('google-sheets-manager');
 
 // --- 2. Konstante (Moraju biti definisane ili uvezene) ---
 const timetableMapA = { "06:20": 1, "06:50": 2, "07:20": 3 };
