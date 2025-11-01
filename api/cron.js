@@ -1,25 +1,29 @@
 // Fajl: api/cron.js (Koristi Google Sheets API)
 
 // Uvozimo GoogleSpreadsheet konstruktor
-import GS from 'google-spreadsheet'; 
+//import GS from 'google-spreadsheet'; 
 
 // Ponekad je klasa skrivena unutar 'default' svojstva kada se koristi 'import'
-const { GoogleSpreadsheet } = GS.default || GS;
+//const { GoogleSpreadsheet } = GS.default || GS;
 
 // --- Konekcija na Sheet ---
 //const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
 
-async function connectToSheet() {
+async function connectAndGetSheet() {
+    // 1. DINAMIČKI ASINHRONI UVOZ
+    const { GoogleSpreadsheet } = await import('google-spreadsheet');
+
+    // 2. Kreirajte instancu unutar async funkcije
     const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
 
-    // Korišćenje Service Account autentifikacije
+    // 3. Korišćenje Service Account autentifikacije
     await doc.useServiceAccountAuth({
         client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
         private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
     });
     
-    await doc.loadInfo(); 
-    return doc.sheetsByTitle['StanjeLinije95']; 
+    await doc.loadInfo();
+    return doc.sheetsByTitle['StanjeLinije95'];
 }
 
 // ... unutar export default async function handler(...) ...
