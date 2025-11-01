@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "dependencies": {
     "google-spreadsheet": "^4.1.0",
     "googleapis": "^128.0.0",
