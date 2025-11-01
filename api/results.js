@@ -11,16 +11,13 @@
 
 async function connectAndGetSheet() { // ili connectToSheet
     
-    // 1. Dinamički uvezite ceo modul
-    const SheetsModule = await import('google-spreadsheet'); 
+    // 1. Dinamički uvezite GoogleSpreadsheet klasu direktno
+    const { GoogleSpreadsheet } = await import('google-spreadsheet'); 
     
-    // 2. Izvadite konstruktor iz .default (što je najsigurniji pristup za ovaj paket)
-    const GoogleSpreadsheet = SheetsModule.default; 
-
-    // 3. Kreirajte instancu
+    // 2. Kreirajte instancu
     const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
 
-    // 4. Autentifikacija
+    // 3. Autentifikacija
     await doc.useServiceAccountAuth({
         client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
         private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
