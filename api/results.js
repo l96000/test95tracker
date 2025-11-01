@@ -7,12 +7,13 @@
 //const { GoogleSpreadsheet } = GS.default || GS;
 
 // const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
-
+const { GoogleSpreadsheet } = require('google-spreadsheet');
+const fetch = require('node-fetch');
 
 async function connectAndGetSheet() { // ili connectToSheet
     
     // 1. Uvezite ceo modul i izvadite klasu
-    const { GoogleSpreadsheet } = await import('google-spreadsheet'); 
+    //const { GoogleSpreadsheet } = await import('google-spreadsheet'); 
     
     // 2. Kreirajte instancu
     const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
