@@ -9,14 +9,18 @@
 // --- Konekcija na Sheet ---
 //const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
 
-async function connectAndGetSheet() {
-    // 1. DINAMIČKI ASINHRONI UVOZ
-    const { GoogleSpreadsheet } = await import('google-spreadsheet');
+async function connectAndGetSheet() { // ili connectToSheet
+    
+    // 1. Dinamički uvezite ceo modul
+    const SheetsModule = await import('google-spreadsheet'); 
+    
+    // 2. Izvadite konstruktor iz .default (što je najsigurniji pristup za ovaj paket)
+    const GoogleSpreadsheet = SheetsModule.default; 
 
-    // 2. Kreirajte instancu unutar async funkcije
+    // 3. Kreirajte instancu
     const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
 
-    // 3. Korišćenje Service Account autentifikacije
+    // 4. Autentifikacija
     await doc.useServiceAccountAuth({
         client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
         private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
